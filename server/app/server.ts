@@ -18,7 +18,13 @@ export class Server {
 
         this.server = http.createServer(this.application.app);
 
-        this.server.listen(this.appPort);
+        // server start line that came with the framework
+        // this.server.listen(this.appPort);
+
+        // server start line if you want to make your server publicly accessible
+        const port: number = 3000;
+        this.server.listen(port, "0.0.0.0");
+
         this.server.on("error", (error: NodeJS.ErrnoException) => this.onError(error));
         this.server.on("listening", () => this.onListening());
     }

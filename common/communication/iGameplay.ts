@@ -1,5 +1,6 @@
 import { GameMode } from "./iCard";
 import { IVector3D } from "./ITheme";
+import { Mode } from "./highscore";
 
 export interface IPosition2D {
     x:  number;
@@ -56,6 +57,11 @@ export interface ICollisions {
 export interface IBounderies {
     minPosition: IVector3D;
     maxPosition: IVector3D;
+}
+export interface INewGameInfo {
+    path: string;
+    gameID: number;
+    type: Mode;
 }
 
 export enum ActionType {

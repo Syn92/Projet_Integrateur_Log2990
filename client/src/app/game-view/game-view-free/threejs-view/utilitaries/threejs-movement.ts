@@ -23,8 +23,8 @@ export class ThreejsMovement {
         this.orthogonal = new THREE.Vector3(0, 0, 0);
         this.pointingAt = new THREE.Vector3(0, 0, 0);
 
-        const geometry = new THREE.SphereGeometry( 0.1 );
-        const material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        const geometry: THREE.SphereGeometry = new THREE.SphereGeometry( 0.1 );
+        const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial( {color: 0xffff00} );
         this.objettttt = new THREE.Mesh( geometry, material );
         scene.add( this.objettttt );
     }

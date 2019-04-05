@@ -139,6 +139,7 @@ export class ThreejsThemeViewService {
     this.scene.add(plane);
   }
 
+  // tslint:disable-next-line:max-func-body-length
   private setWalls(): void {
     const leftWall:          THREE.PlaneBufferGeometry = new THREE.PlaneBufferGeometry(
       CClient.FLOOR_DIMENTION, CClient.FLOOR_DIMENTION, CClient.FLOOR_SEGMENT, CClient.FLOOR_SEGMENT);

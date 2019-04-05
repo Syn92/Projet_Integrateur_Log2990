@@ -147,6 +147,13 @@ export class ThreejsThemeViewService {
     planeLeft.rotateY( - Math.PI / CClient.FLOOR_DIVIDER);
     planeLeft.position.x = -600;
     this.scene.add(planeLeft);
+
+    const rightWall:          THREE.PlaneBufferGeometry = new THREE.PlaneBufferGeometry(
+      CClient.FLOOR_DIMENTION, CClient.FLOOR_DIMENTION, CClient.FLOOR_SEGMENT, CClient.FLOOR_SEGMENT);
+    const planeRight:          THREE.Mesh                = new THREE.Mesh(rightWall, floorMaterial);
+    planeRight.rotateY( - Math.PI / CClient.FLOOR_DIVIDER);
+    planeRight.position.x = 600;
+    this.scene.add(planeRight);
   }
 
   public changeObjectsColor(cheatColorActivated: boolean, isLastChange: boolean, modifiedList?: number[]): void {

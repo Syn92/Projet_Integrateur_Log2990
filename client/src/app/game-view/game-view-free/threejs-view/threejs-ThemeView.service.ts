@@ -139,6 +139,9 @@ export class ThreejsThemeViewService {
     this.scene.add(plane);
   }
 
+  private setWalls(): void {
+  }
+
   public changeObjectsColor(cheatColorActivated: boolean, isLastChange: boolean, modifiedList?: number[]): void {
 
     if (!modifiedList) {

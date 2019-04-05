@@ -10,21 +10,27 @@ export class ThreejsMovement {
     private camera:     THREE.PerspectiveCamera;
     private velocity:   THREE.Vector3;
     private direction:  THREE.Vector3;
-    private front:      THREE.Vector3;
+    private forward:    THREE.Vector3;
     private orthogonal: THREE.Vector3;
+    private boule: THREE.Mesh;
 
     public constructor(camera: THREE.PerspectiveCamera, private scene: THREE.Scene) {
         this.camera     = camera;
         this.velocity   = new THREE.Vector3(0, 0, 0);
         this.direction  = new THREE.Vector3(0, 0, 0);
-        this.front      = new THREE.Vector3(0, 0, 0);
+        this.forward    = new THREE.Vector3(0, 0, 0);
         this.orthogonal = new THREE.Vector3(0, 0, 0);
+
+        const geometry: THREE.SphereGeometry = new THREE.SphereGeometry( 0.1 );
+        const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        this.boule = new THREE.Mesh( geometry, material );
+        scene.add( this.boule );
     }
 
     public setupFront(orientation: number): void {
-        this.camera.getWorldDirection(this.front);
-        this.front.normalize();
-        this.multiplyVector(this.front, orientation);
+        this.camera.getWorldDirection(this.forward);
+        this.forward.normalize();
+        this.multiplyVector(this.forward, orientation);
     }
 
     public rotateCamera(position: IPosition2D): void {
@@ -43,7 +49,7 @@ export class ThreejsMovement {
           this.moveToSide(-1);
         }
 
-        this.addVectors(this.front, this.orthogonal, this.direction);
+        this.direction = this.addVectors(this.forward, this.orthogonal);
         this.direction.normalize();
 
         if ( moveForward || moveBackward || moveLeft || moveRight) {
@@ -56,6 +62,7 @@ export class ThreejsMovement {
         }
         if (!this.objectIsBlockingDirection(this.direction.z)) {
             this.translateCamera();
+            this.bougeMaBoule();
         }
     }
 
@@ -63,7 +70,7 @@ export class ThreejsMovement {
         const frontvector:  THREE.Vector3 = new THREE.Vector3(0, 0, 0);
         const yAxis:        THREE.Vector3 = new THREE.Vector3(0, orientation, 0);
         this.camera.getWorldDirection(frontvector);
-        this.crossProduct(frontvector, yAxis, this.orthogonal);
+        this.orthogonal = this.crossProduct(frontvector, yAxis);
     }
 
     private setCameratVelocity(): void {
@@ -87,6 +94,12 @@ export class ThreejsMovement {
         return objectsIntersected.length > 0 && objectsIntersected[0].distance < this.CAMERA_COLLISION_RADIUS;
     }
 
+    private bougeMaBoule(): void {
+        this.boule.position.x = this.camera.position.x + -this.forward.x * (this.CAMERA_COLLISION_RADIUS + 1);
+        this.boule.position.y = this.camera.position.y + -this.forward.y * (this.CAMERA_COLLISION_RADIUS + 1);
+        this.boule.position.z = this.camera.position.z + -this.forward.z * (this.CAMERA_COLLISION_RADIUS + 1);
+    }
+
     private translateCamera(): void {
         this.camera.translateX(this.velocity.x);
         this.camera.translateY(this.velocity.y);
@@ -99,18 +112,22 @@ export class ThreejsMovement {
         vector.z *= multiplier;
     }
 
-    private addVectors (vector1: THREE.Vector3, vector2: THREE.Vector3, toVector: THREE.Vector3): void {
-        toVector = new THREE.Vector3(0, 0, 0);
+    private addVectors (vector1: THREE.Vector3, vector2: THREE.Vector3): THREE.Vector3 {
+        const toVector: THREE.Vector3 = new THREE.Vector3(0, 0, 0);
         toVector.x = vector1.x + vector2.x;
         toVector.y = vector1.y + vector2.y;
         toVector.z = vector1.z + vector2.z;
+
+        return toVector;
     }
 
-    private crossProduct (vector1: THREE.Vector3, vector2: THREE.Vector3, toVector: THREE.Vector3): void {
-        toVector = new THREE.Vector3(0, 0, 0);
+    private crossProduct (vector1: THREE.Vector3, vector2: THREE.Vector3): THREE.Vector3 {
+        const toVector: THREE.Vector3 = new THREE.Vector3(0, 0, 0);
         toVector.x = (vector1.y * vector2.z) - (vector1.z * vector2.y);
         toVector.y = (vector1.x * vector2.z) - (vector1.z * vector2.x);
         toVector.z = (vector1.x * vector2.y) - (vector1.y * vector2.x);
+
+        return toVector;
     }
 
 }

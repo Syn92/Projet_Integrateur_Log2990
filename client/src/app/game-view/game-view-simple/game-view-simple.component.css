@@ -1,6 +1,6 @@
 #displayGame {
   margin-top:         20px;
-  background:       rgb(240, 240, 240);
+  background:         rgb(240, 240, 240);
   box-shadow:         0px 1px 2px #333333;
   border-radius:      5px;
   position:           relative;
@@ -17,7 +17,7 @@
 .gameName {
   font-size:    40px;
   font-weight:  bold;
-  color:      #7982D5;
+  color:        #7982D5;
   margin-top:   3%;
 }
 
@@ -60,7 +60,7 @@ app-difference-counter {
   position:            absolute;
   z-index:             1;
   font-size:           18px;
-  color:             red;
+  color:               red;
   font:                Roboto, "Helvetica Neue", sans-serif;
   text-shadow:         -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   width:               100%;
@@ -82,7 +82,7 @@ app-difference-counter {
 
 .counterOut {
   border:             1px solid rgb(36, 36, 36);
-  background-color: rgb(235, 237, 251);
+  background-color:   rgb(235, 237, 251);
 }
 
 
@@ -100,7 +100,7 @@ app-difference-counter {
   font-family:  'Open Sans', sans-serif;
   font-size:    22pt;
   font-weight:  bold;
-  color:      #7982D5;
+  color:       #7982D5;
 }
 
 
